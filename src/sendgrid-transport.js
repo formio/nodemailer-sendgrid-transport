@@ -1,6 +1,6 @@
 'use strict';
 
-var SendGrid = require('sendgrid');
+const SendGrid = require('@sendgrid/mail');
 var packageData = require('../package.json');
 
 module.exports = function(options) {
@@ -16,10 +16,10 @@ function SendGridTransport(options) {
 
   if (!this.options.auth.api_user) {
     // api key
-    this.sendgrid = SendGrid(this.options.auth.api_key);
+    this.sendgrid = SendGrid.setApiKey(this.options.auth.api_key);
   } else {
     // username + password
-    this.sendgrid = SendGrid(this.options.auth.api_user, this.options.auth.api_key);
+    this.sendgrid = SendGrid.setTwilioEmailAuth(this.options.auth.api_user, this.options.auth.api_key)
   }
 }
 
